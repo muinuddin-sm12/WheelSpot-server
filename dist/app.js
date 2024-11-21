@@ -5,9 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const car_route_1 = require("./app/modules/car/car.route");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
+// application routes
+app.use('/api', car_route_1.CarRoutes);
 app.get("/", (req, res) => {
     res.send("Hello from L2-Assignment-2!");
 });
