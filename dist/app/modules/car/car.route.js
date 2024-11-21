@@ -8,4 +8,6 @@ const express_1 = __importDefault(require("express"));
 const car_controller_1 = require("./car.controller");
 const router = express_1.default.Router();
 router.post('/cars', car_controller_1.CarController.createCar);
+router.get('/cars', car_controller_1.CarController.getAllCars);
+router.get('/cars/:id', car_controller_1.CarController.getACar);
 exports.CarRoutes = router;

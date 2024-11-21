@@ -15,6 +15,16 @@ const createCarIntoDB = (car) => __awaiter(void 0, void 0, void 0, function* () 
     const result = yield car_model_1.CarModel.create(car);
     return result;
 });
+const getAllCarsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield car_model_1.CarModel.find();
+    return result;
+});
+const getACarFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield car_model_1.CarModel.findById(id);
+    return result;
+});
 exports.CarService = {
     createCarIntoDB,
+    getAllCarsFromDB,
+    getACarFromDB,
 };

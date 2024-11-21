@@ -17,7 +17,34 @@ const createCar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield car_service_1.CarService.createCarIntoDB(carData);
         res.status(200).json({
             message: "Car created successfully",
-            success: true,
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+const getAllCars = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield car_service_1.CarService.getAllCarsFromDB();
+        res.status(200).json({
+            message: "Cars retrieved successfully",
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+const getACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const result = yield car_service_1.CarService.getACarFromDB(id);
+        res.status(200).json({
+            message: "Car retrieved successfully",
+            status: true,
             data: result,
         });
     }
@@ -27,4 +54,6 @@ const createCar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.CarController = {
     createCar,
+    getAllCars,
+    getACar,
 };
