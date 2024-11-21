@@ -23,8 +23,18 @@ const getACarFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield car_model_1.CarModel.findById(id);
     return result;
 });
+const updateACarIntoDB = (id, car) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield car_model_1.CarModel.findByIdAndUpdate(id, car);
+    return result;
+});
+const deleteACarIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield car_model_1.CarModel.findByIdAndDelete(id);
+    return result;
+});
 exports.CarService = {
     createCarIntoDB,
     getAllCarsFromDB,
     getACarFromDB,
+    updateACarIntoDB,
+    deleteACarIntoDB
 };

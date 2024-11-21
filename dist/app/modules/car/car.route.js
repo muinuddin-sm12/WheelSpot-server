@@ -10,4 +10,6 @@ const router = express_1.default.Router();
 router.post('/cars', car_controller_1.CarController.createCar);
 router.get('/cars', car_controller_1.CarController.getAllCars);
 router.get('/cars/:id', car_controller_1.CarController.getACar);
+router.put('/cars/:id', car_controller_1.CarController.updateACar);
+router.delete('/cars/:id', car_controller_1.CarController.deleteACar);
 exports.CarRoutes = router;

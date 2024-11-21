@@ -52,8 +52,39 @@ const getACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 });
+const updateACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const body = req.body;
+        const result = yield car_service_1.CarService.updateACarIntoDB(id, body);
+        res.status(200).json({
+            message: "Car updated successfully",
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+const deleteACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const result = yield car_service_1.CarService.deleteACarIntoDB(id);
+        res.status(200).json({
+            message: "Car deleted successfully",
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 exports.CarController = {
     createCar,
     getAllCars,
     getACar,
+    updateACar,
+    deleteACar
 };
