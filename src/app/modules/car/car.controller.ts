@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { CarService } from "./car.service";
+import { carValidationSchema } from "./car.validation";
 
 
 const createCar = async (req:Request, res:Response)=> {
     try{
         const {car: carData} = req.body;
-        const result = await CarService.createCarIntoDB(carData);
+        const zodParseData = carValidationSchema.parse(carData);
+        const result = await CarService.createCarIntoDB(zodParseData);
         res.status(200).json({
             message: "Car created successfully",
             status: true,
