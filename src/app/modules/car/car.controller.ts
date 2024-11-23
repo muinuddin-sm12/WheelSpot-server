@@ -5,7 +5,6 @@ import { carValidationSchema } from './car.validation';
 
 const createCar = async (req: Request, res: Response) => {
   try {
-    // const {car: carData} = req.body;
     const carData = req.body;
     const zodParseData = carValidationSchema.parse(carData);
     const result = await CarService.createCarIntoDB(zodParseData);

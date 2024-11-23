@@ -36,5 +36,5 @@ exports.CarService = {
     getAllCarsFromDB,
     getACarFromDB,
     updateACarIntoDB,
-    deleteACarIntoDB
+    deleteACarIntoDB,
 };

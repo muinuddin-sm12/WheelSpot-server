@@ -14,7 +14,6 @@ const car_service_1 = require("./car.service");
 const car_validation_1 = require("./car.validation");
 const createCar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const {car: carData} = req.body;
         const carData = req.body;
         const zodParseData = car_validation_1.carValidationSchema.parse(carData);
         const result = yield car_service_1.CarService.createCarIntoDB(zodParseData);
@@ -86,7 +85,7 @@ const updateACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             message: 'Something went wrong',
             success: false,
             error: error,
-            stack: error.stack
+            stack: error.stack,
         });
     }
 });
@@ -105,7 +104,7 @@ const deleteACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             message: 'Something went wrong',
             success: false,
             error: error,
-            stack: error.stack
+            stack: error.stack,
         });
     }
 });

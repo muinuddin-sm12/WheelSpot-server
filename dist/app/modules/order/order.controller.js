@@ -16,14 +16,13 @@ const order_validation_1 = require("./order.validation");
 const order_model_1 = require("./order.model");
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const {order: orderData} = req.body;
         const orderData = req.body;
-        const zodParseData = order_validation_1.orderValidationSchema.parse(orderData);
-        const result = yield order_service_1.OrderService.createOrderIntoDB(zodParseData);
+        const zodParsedData = order_validation_1.orderValidationSchema.parse(orderData);
+        const result = yield order_service_1.OrderService.createOrderIntoDB(zodParsedData);
         res.status(200).json({
-            message: "Order created successfully",
+            message: 'Order created successfully',
             status: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
@@ -41,12 +40,12 @@ const getRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             {
                 $group: {
                     _id: null,
-                    totalRevenue: { $sum: "$totalPrice" },
-                }
-            }
+                    totalRevenue: { $sum: '$totalPrice' },
+                },
+            },
         ]);
         res.status(200).json({
-            message: "Revenue calculated successfully",
+            message: 'Revenue calculated successfully',
             status: true,
             data: {
                 totalRevenue: revenue[0].totalRevenue,
@@ -55,7 +54,7 @@ const getRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (error) {
         res.status(500).json({
-            message: "Something went wrong",
+            message: 'Something went wrong',
             status: false,
             error: error,
             stack: error.stack,
@@ -64,5 +63,5 @@ const getRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.OrderController = {
     createOrder,
-    getRevenue
+    getRevenue,
 };

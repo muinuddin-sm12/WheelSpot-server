@@ -15,5 +15,5 @@ const carSchema = new mongoose_1.Schema({
     description: { type: String, required: true },
     quantity: { type: Number, required: true },
     inStock: { type: Boolean, required: true },
-});
+}, { timestamps: true });
 exports.CarModel = (0, mongoose_1.model)('Car', carSchema);
