@@ -11,74 +11,102 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarController = void 0;
 const car_service_1 = require("./car.service");
+const car_validation_1 = require("./car.validation");
 const createCar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { car: carData } = req.body;
-        const result = yield car_service_1.CarService.createCarIntoDB(carData);
+        // const {car: carData} = req.body;
+        const carData = req.body;
+        const zodParseData = car_validation_1.carValidationSchema.parse(carData);
+        const result = yield car_service_1.CarService.createCarIntoDB(zodParseData);
         res.status(200).json({
-            message: "Car created successfully",
+            message: 'Car created successfully',
             status: true,
             data: result,
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: 'Something went wrong',
+            success: false,
+            error: error,
+            stack: error.stack,
+        });
     }
 });
 const getAllCars = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield car_service_1.CarService.getAllCarsFromDB();
         res.status(200).json({
-            message: "Cars retrieved successfully",
+            message: 'Cars retrieved successfully',
             status: true,
             data: result,
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: 'Something went wrong',
+            success: false,
+            error: error,
+            stack: error.stack,
+        });
     }
 });
 const getACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.params.carId;
         const result = yield car_service_1.CarService.getACarFromDB(id);
         res.status(200).json({
-            message: "Car retrieved successfully",
+            message: 'Car retrieved successfully',
             status: true,
             data: result,
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: 'Something went wrong',
+            success: false,
+            error: error,
+            stack: error.stack,
+        });
     }
 });
 const updateACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.params.carId;
         const body = req.body;
         const result = yield car_service_1.CarService.updateACarIntoDB(id, body);
         res.status(200).json({
-            message: "Car updated successfully",
+            message: 'Car updated successfully',
             status: true,
             data: result,
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: 'Something went wrong',
+            success: false,
+            error: error,
+            stack: error.stack
+        });
     }
 });
 const deleteACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.params.carId;
         const result = yield car_service_1.CarService.deleteACarIntoDB(id);
         res.status(200).json({
-            message: "Car deleted successfully",
+            message: 'Car deleted successfully',
             status: true,
             data: result,
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: 'Something went wrong',
+            success: false,
+            error: error,
+            stack: error.stack
+        });
     }
 });
 exports.CarController = {
@@ -86,5 +114,5 @@ exports.CarController = {
     getAllCars,
     getACar,
     updateACar,
-    deleteACar
+    deleteACar,
 };
