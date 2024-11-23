@@ -17,15 +17,18 @@ const orderSchema = new mongoose_1.Schema({
     car: { type: String, required: true },
     quantity: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
+}, {
+    timestamps: true,
+    versionKey: false,
 });
-orderSchema.pre("save", function (next) {
+orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const car = yield car_model_1.CarModel.findById(this.car);
         if (!car) {
-            throw new Error("Car not found");
+            throw new Error('Car not found');
         }
         if (car.quantity < this.quantity) {
-            throw new Error("Insufficient stock");
+            throw new Error('Insufficient stock');
         }
         car.quantity -= this.quantity;
         // Adjust stock status
