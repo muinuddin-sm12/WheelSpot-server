@@ -16,7 +16,7 @@ const carSchema = new Schema<Car>(
     quantity: { type: Number, required: true },
     inStock: { type: Boolean, required: true },
   },
-  { timestamps: true },
+  { timestamps: true , versionKey: false},
 );
 
 export const CarModel = model<Car>('Car', carSchema);
