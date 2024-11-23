@@ -31,7 +31,7 @@ const getAllCars = async (req: Request, res: Response) => {
       status: true,
       data: result,
     });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({
       message: 'Something went wrong',
       success: false,
@@ -68,12 +68,12 @@ const updateACar = async (req: Request, res: Response) => {
       status: true,
       data: result,
     });
-  } catch (error:any) {
+  } catch (error: any) {
     res.status(500).json({
       message: 'Something went wrong',
       success: false,
       error: error,
-      stack: error.stack
+      stack: error.stack,
     });
   }
 };
@@ -91,7 +91,7 @@ const deleteACar = async (req: Request, res: Response) => {
       message: 'Something went wrong',
       success: false,
       error: error,
-      stack: error.stack
+      stack: error.stack,
     });
   }
 };

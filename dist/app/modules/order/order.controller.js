@@ -48,11 +48,18 @@ const getRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(200).json({
             message: "Revenue calculated successfully",
             status: true,
-            data: revenue,
+            data: {
+                totalRevenue: revenue[0].totalRevenue,
+            },
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(500).json({
+            message: "Something went wrong",
+            status: false,
+            error: error,
+            stack: error.stack,
+        });
     }
 });
 exports.OrderController = {
