@@ -17,25 +17,18 @@ const orderSchema = new Schema<Order>(
 
 orderSchema.pre('save', async function (next) {
   const car = await CarModel.findById(this.car);
+  if (car) {
+    car.quantity -= this.quantity;
 
-  if (!car) {
-    throw new Error('Car not found');
+    // Adjust stock status
+    if (car.quantity === 0) {
+      car.inStock = false;
+    } else {
+      car.inStock = true;
+    }
+
+    await car.save();
   }
-
-  if (car.quantity < this.quantity) {
-    throw new Error('Insufficient stock');
-  }
-
-  car.quantity -= this.quantity;
-
-  // Adjust stock status
-  if (car.quantity === 0) {
-    car.inStock = false;
-  } else {
-    car.inStock = true;
-  }
-
-  await car.save();
   next();
 });
 
