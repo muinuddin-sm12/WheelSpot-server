@@ -92,11 +92,11 @@ const updateACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const deleteACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.carId;
-        const result = yield car_service_1.CarService.deleteACarIntoDB(id);
+        yield car_service_1.CarService.deleteACarIntoDB(id);
         res.status(200).json({
             message: 'Car deleted successfully',
             status: true,
-            data: result,
+            data: {},
         });
     }
     catch (error) {

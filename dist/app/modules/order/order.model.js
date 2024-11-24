@@ -24,21 +24,17 @@ const orderSchema = new mongoose_1.Schema({
 orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const car = yield car_model_1.CarModel.findById(this.car);
-        if (!car) {
-            throw new Error('Car not found');
+        if (car) {
+            car.quantity -= this.quantity;
+            // Adjust stock status
+            if (car.quantity === 0) {
+                car.inStock = false;
+            }
+            else {
+                car.inStock = true;
+            }
+            yield car.save();
         }
-        if (car.quantity < this.quantity) {
-            throw new Error('Insufficient stock');
-        }
-        car.quantity -= this.quantity;
-        // Adjust stock status
-        if (car.quantity === 0) {
-            car.inStock = false;
-        }
-        else {
-            car.inStock = true;
-        }
-        yield car.save();
         next();
     });
 });
