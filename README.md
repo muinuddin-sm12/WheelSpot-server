@@ -24,14 +24,15 @@ This project is a RESTful API for managing car data. Built with Node.js, Express
 Follow the steps below to set up and run this project locally:
 
 ### **1. Clone the Repository**
+```bash
 git clone https://github.com/yourusername/car-management-api.git
 
+```
 ### **2. Install Dependencies**
+```bash
 npm install
-
+```
 ### **3. Set Up Environment Variables**
+```bash
 PORT=....
 DATABASE_URL=mongodb://localhost:27017/car-store
-
-
-
