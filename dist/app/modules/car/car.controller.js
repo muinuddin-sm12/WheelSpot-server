@@ -8,106 +8,60 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarController = void 0;
 const car_service_1 = require("./car.service");
 const car_validation_1 = require("./car.validation");
-const createCar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const carData = req.body;
-        const zodParseData = car_validation_1.carValidationSchema.parse(carData);
-        const result = yield car_service_1.CarService.createCarIntoDB(zodParseData);
-        res.status(200).json({
-            message: 'Car created successfully',
-            status: true,
-            data: result,
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            message: 'Something went wrong',
-            success: false,
-            error: error,
-            stack: error.stack,
-        });
-    }
-});
-const getAllCars = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield car_service_1.CarService.getAllCarsFromDB();
-        res.status(200).json({
-            message: 'Cars retrieved successfully',
-            status: true,
-            data: result,
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            message: 'Something went wrong',
-            success: false,
-            error: error,
-            stack: error.stack,
-        });
-    }
-});
-const getACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const id = req.params.carId;
-        const result = yield car_service_1.CarService.getACarFromDB(id);
-        res.status(200).json({
-            message: 'Car retrieved successfully',
-            status: true,
-            data: result,
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            message: 'Something went wrong',
-            success: false,
-            error: error,
-            stack: error.stack,
-        });
-    }
-});
-const updateACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const id = req.params.carId;
-        const body = req.body;
-        const result = yield car_service_1.CarService.updateACarIntoDB(id, body);
-        res.status(200).json({
-            message: 'Car updated successfully',
-            status: true,
-            data: result,
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            message: 'Something went wrong',
-            success: false,
-            error: error,
-            stack: error.stack,
-        });
-    }
-});
-const deleteACar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const id = req.params.carId;
-        yield car_service_1.CarService.deleteACarIntoDB(id);
-        res.status(200).json({
-            message: 'Car deleted successfully',
-            status: true,
-            data: {},
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            message: 'Something went wrong',
-            success: false,
-            error: error,
-            stack: error.stack,
-        });
-    }
-});
+const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
+const createCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const carData = req.body;
+    const zodParseData = car_validation_1.carValidationSchema.parse(carData);
+    const result = yield car_service_1.CarService.createCarIntoDB(zodParseData);
+    res.status(200).json({
+        message: 'Car created successfully',
+        status: true,
+        data: result,
+    });
+}));
+const getAllCars = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield car_service_1.CarService.getAllCarsFromDB();
+    res.status(200).json({
+        message: 'Cars retrieved successfully',
+        status: true,
+        data: result,
+    });
+}));
+const getACar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.carId;
+    const result = yield car_service_1.CarService.getACarFromDB(id);
+    res.status(200).json({
+        message: 'Car retrieved successfully',
+        status: true,
+        data: result,
+    });
+}));
+const updateACar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.carId;
+    const body = req.body;
+    const result = yield car_service_1.CarService.updateACarIntoDB(id, body);
+    res.status(200).json({
+        message: 'Car updated successfully',
+        status: true,
+        data: result,
+    });
+}));
+const deleteACar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.carId;
+    yield car_service_1.CarService.deleteACarIntoDB(id);
+    res.status(200).json({
+        message: 'Car deleted successfully',
+        status: true,
+        data: {},
+    });
+}));
 exports.CarController = {
     createCar,
     getAllCars,
