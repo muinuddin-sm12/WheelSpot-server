@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import { CarService } from './car.service';
 import { carValidationSchema } from './car.validation';
-import catchAsync from '../../../utils/catchAsync';
+import catchAsync from '../../utils/catchAsync';
 
 const createCar = catchAsync(async (req: Request, res: Response) => {
   const carData = req.body;
