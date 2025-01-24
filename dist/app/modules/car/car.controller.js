@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarController = void 0;
 const car_service_1 = require("./car.service");
 const car_validation_1 = require("./car.validation");
-const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const createCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const carData = req.body;
     const zodParseData = car_validation_1.carValidationSchema.parse(carData);

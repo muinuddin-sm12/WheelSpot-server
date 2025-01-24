@@ -37,7 +37,7 @@ const login = async (payload: { email: string; password: string }) => {
   });
 
   return {
-    token,
+    refreshToken: token,
   };
 };
 export const AuthServices = {

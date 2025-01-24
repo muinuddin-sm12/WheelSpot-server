@@ -17,7 +17,7 @@ exports.OrderController = void 0;
 const order_service_1 = require("./order.service");
 const order_validation_1 = require("./order.validation");
 const order_model_1 = require("./order.model");
-const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderData = req.body;
     const zodParsedData = order_validation_1.orderValidationSchema.parse(orderData);

@@ -7,13 +7,14 @@ import bcrypt from 'bcrypt';
 const userSchema = new Schema<TUser>({
     name: {type: String, required:[true, 'User name is required']},
     email: {type:String, required: [true, 'Email is required' ], unique: true},
-    password: {type: String, required: [true, 'Password is requried']},
+    password: {type: String, required: [true, 'Password is requried'], select: false},
     role: {
         type: String,
         enum: {
             values: ['admin', 'user'],
             message: '{VALUE} is not supported',
-        }
+        },
+        default: 'user',
     },
     deactivate: {type: Boolean, default: false},
 }, {timestamps: true})
