@@ -33,11 +33,11 @@ const login = async (payload: { email: string; password: string }) => {
     role: user?.role,
   };
   const token = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: '3d',
+    expiresIn: '7d',
   });
 
   return {
-    refreshToken: token,
+    accessToken: token,
   };
 };
 export const AuthServices = {

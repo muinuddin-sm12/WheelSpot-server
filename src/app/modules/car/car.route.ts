@@ -2,9 +2,9 @@ import express from 'express';
 import { CarController } from './car.controller';
 
 const router = express.Router();
-router.post('/cars', CarController.createCar);
-router.get('/cars', CarController.getAllCars);
-router.get('/cars/:carId', CarController.getACar);
-router.put('/cars/:carId', CarController.updateACar);
-router.delete('/cars/:carId', CarController.deleteACar);
+router.post('/', CarController.createCar);
+router.get('/', CarController.getAllCars);
+router.get('/:carId', CarController.getACar);
+router.put('/:carId', CarController.updateACar);
+router.delete('/:carId', CarController.deleteACar);
 export const CarRoutes = router;

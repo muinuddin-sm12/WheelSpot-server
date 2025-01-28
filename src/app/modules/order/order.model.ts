@@ -4,24 +4,24 @@ import { CarModel } from '../car/car.model';
 
 const orderSchema = new Schema<Order>(
   {
-    email: { type: String, required: true },
-    car: { type: String, required: true },
+    user: { type: Schema.Types.ObjectId, required: true },
+    carDetails: { type: Schema.Types.ObjectId, required: true },
     quantity: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
+    status: {type: Boolean, default: false}
   },
   {
     timestamps: true,
-    versionKey: false,
   },
 );
 
 orderSchema.pre('save', async function (next) {
-  const car = await CarModel.findById(this.car);
+  const car = await CarModel.findById(this.carDetails);
   if (car) {
     car.quantity -= this.quantity;
 
     // Adjust stock status
-    if (car.quantity === 0) {
+    if (car.quantity === 0 || car.quantity <0) {
       car.inStock = false;
     } else {
       car.inStock = true;

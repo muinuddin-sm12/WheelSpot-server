@@ -40,10 +40,10 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         role: user === null || user === void 0 ? void 0 : user.role,
     };
     const token = jsonwebtoken_1.default.sign(jwtPayload, config_1.default.jwt_access_secret, {
-        expiresIn: '3d',
+        expiresIn: '7d',
     });
     return {
-        token,
+        accessToken: token,
     };
 });
 exports.AuthServices = {

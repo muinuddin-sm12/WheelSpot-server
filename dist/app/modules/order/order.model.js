@@ -13,13 +13,13 @@ exports.OrderModel = void 0;
 const mongoose_1 = require("mongoose");
 const car_model_1 = require("../car/car.model");
 const orderSchema = new mongoose_1.Schema({
-    email: { type: String, required: true },
-    car: { type: String, required: true },
-    quantity: { type: Number, required: true },
-    totalPrice: { type: Number, required: true },
+    user: { type: mongoose_1.Schema.Types.ObjectId, required: true },
+    carDetails: { type: mongoose_1.Schema.Types.ObjectId, required: true },
+    quantity: { type: String, required: true },
+    totalPrice: { type: String, required: true },
+    status: { type: Boolean, default: false }
 }, {
     timestamps: true,
-    versionKey: false,
 });
 orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {

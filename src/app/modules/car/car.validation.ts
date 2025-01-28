@@ -7,6 +7,6 @@ export const carValidationSchema = z.object({
   price: z.number().positive(),
   category: z.enum(['Sedan', 'SUV', 'Truck', 'Coupe', 'Convertible']),
   description: z.string(),
-  quantity: z.number().positive().min(1),
-  inStock: z.boolean(),
+  quantity: z.number().positive(),
+  image: z.string()
 });

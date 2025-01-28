@@ -1,6 +1,9 @@
+import { ObjectId } from "mongoose";
+
 export type Order = {
-  email: string;
-  car: string;
+  user: ObjectId;
+  carDetails: ObjectId;
   quantity: number;
   totalPrice: number;
+  status: boolean;
 };
