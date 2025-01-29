@@ -1,8 +1,10 @@
 import express from 'express';
+import { UserController } from './user.controller';
 
 const router = express.Router();
 
-router.post('/', OrderController.createOrder);
-router.get('/:userId', OrderController.getRevenue);
+router.get('/', UserController.getAllUsers);
+router.get('/:id', UserController.getAUser);
+router.put('/:id', UserController.updateAUser);
 
-export const OrderRoutes = router;
+export const UserRoutes = router;
