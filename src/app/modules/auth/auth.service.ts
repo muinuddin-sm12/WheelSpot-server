@@ -41,16 +41,28 @@ const login = async (payload: { email: string; password: string }) => {
   };
 };
 
-const resetPassword = async (payload: {
-  id: string;
-  newPassword: string;
-}) => {
+const changePassword = async (
+  userId: string,
+  payload: { oldPassword: string; newPassword: string },
+) => {
+  // console.log('user data from auth', userId, payload)
   // checking if the user is exist
-  const user = await User.findById(payload?.id);
-  // console.log(user);
+  const user = await User.findById(userId).select('password');
+  // console.log(user)
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
+  // checking if the user is already deleted
+
+  const isDeactivated = user?.deactivate;
+
+  if (isDeactivated) {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is deactivated !');
+  }
+  //checking if the password is correct
+
+  if (!(await User.isPasswordMatched(payload.oldPassword, user?.password)))
+    throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
 
   //hash new password
   const newHashedPassword = await bcrypt.hash(
@@ -60,18 +72,17 @@ const resetPassword = async (payload: {
 
   await User.findOneAndUpdate(
     {
-      id: decoded.userId,
-      role: decoded.role,
+      _id: userId,
     },
     {
       password: newHashedPassword,
-      needsPasswordChange: false,
-      passwordChangedAt: new Date(),
     },
   );
+
+  return null;
 };
 export const AuthServices = {
   register,
   login,
-  resetPassword,
+  changePassword,
 };

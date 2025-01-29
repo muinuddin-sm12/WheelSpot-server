@@ -22,17 +22,23 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const resetPassword = catchAsync(async (req, res) => {
-  const result = await AuthServices.resetPassword(req.body);
+const changePassword = catchAsync(async (req, res) => {
+  const userId = req.body.userId;
+  const passwordData = {
+    oldPassword: req.body.oldPassword,
+    newPassword: req.body.newPassword,
+  };
+
+  const result = await AuthServices.changePassword(userId, passwordData);
   res.status(httpStatus.OK).json({
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Password reset succesfully!',
+    message: 'Password is updated succesfully!',
     data: result,
   });
 });
 export const AuthController = {
   register,
   login,
-  resetPassword,
+  changePassword,
 };
