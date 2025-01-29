@@ -38,12 +38,12 @@ class QueryBuilder<T> {
     return this;
   }
 
-  sortBy() {
-    const sortBy = (this?.query?.sortBy as string) || 'createdAt';
-    const sortOrder = this?.query?.sortOrder === 'asc' ? '' : '-';
-    const sort = `${sortOrder}${sortBy}`;
-    this.modelQuery = this.modelQuery.sort(sort);
-    return this;
-  }
+//   sortBy() {
+//     const sortBy = (this?.query?.sortBy as string) || 'createdAt';
+//     const sortOrder = this?.query?.sortOrder === 'asc' ? '' : '-';
+//     const sort = `${sortOrder}${sortBy}`;
+//     this.modelQuery = this.modelQuery.sort(sort);
+//     return this;
+//   }
 }
 export default QueryBuilder;

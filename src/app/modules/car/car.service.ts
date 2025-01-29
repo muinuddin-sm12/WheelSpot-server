@@ -8,7 +8,9 @@ const createCarIntoDB = async (car: Car) => {
   return result;
 };
 const getAllCarsFromDB = async (query: Record<string, unknown>) => {
-  const carsQuery = new QueryBuilder(CarModel.find(), query).search(carSearchableFields).filter()
+  const carsQuery = new QueryBuilder(CarModel.find(), query)
+    .search(carSearchableFields)
+    .filter();
   const result = await carsQuery.modelQuery;
   return result;
 };

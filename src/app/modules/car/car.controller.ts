@@ -15,7 +15,7 @@ const createCar = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getAllCars = catchAsync(async (req: Request, res: Response) => {
-  const result = await CarService.getAllCarsFromDB();
+  const result = await CarService.getAllCarsFromDB(req.query);
   res.status(200).json({
     message: 'Cars retrieved successfully',
     status: true,
