@@ -8,5 +8,6 @@ const router = Router();
 
 router.post('/register', validateRequest(UserValidation.userValidationSchema), AuthController.register)
 router.post('/login', validateRequest(AuthValidations.loginValidationSchema), AuthController.login);
+router.post('/reset-password', AuthController.resetPassword);
 
 export const AuthRoutes = router;

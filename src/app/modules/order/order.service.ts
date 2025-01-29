@@ -6,11 +6,12 @@ import { orderUtils } from './order.utils';
 const createOrder = async (
   user: TUser,
   payload: { products: { product: string; quantity: number }[] },
-  client_ip: string
+  client_ip: string,
 ) => {
-  if (!payload?.products?.length)
-    throw new Error("Order is not specified");
-
+  // console.log(payload?.products);
+  if (!payload?.products?.length) {
+    throw new Error('Order is not specified');
+  }
   const products = payload.products;
 
   let totalPrice = 0;
@@ -22,7 +23,7 @@ const createOrder = async (
         totalPrice += subtotal;
         return item;
       }
-    })
+    }),
   );
 
   let order = await OrderModel.create({
@@ -35,12 +36,12 @@ const createOrder = async (
   const shurjopayPayload = {
     amount: totalPrice,
     order_id: order._id,
-    currency: "BDT",
+    currency: 'USD',
     customer_name: user.name,
-    customer_address: "N/A",
+    customer_address: 'N/A',
     customer_email: user.email,
-    customer_phone: "N/A",
-    customer_city: "N/A",
+    customer_phone: 'N/A',
+    customer_city: 'N/A',
     client_ip,
   };
 
@@ -66,27 +67,28 @@ const getOrders = async () => {
 const verifyPayment = async (order_id: string) => {
   const verifiedPayment = await orderUtils.verifyPaymentAsync(order_id);
 
+  console.log(order_id)
   if (verifiedPayment.length) {
     await OrderModel.findOneAndUpdate(
       {
-        "transaction.id": order_id,
+        'transaction.id': order_id,
       },
       {
-        "transaction.bank_status": verifiedPayment[0].bank_status,
-        "transaction.sp_code": verifiedPayment[0].sp_code,
-        "transaction.sp_message": verifiedPayment[0].sp_message,
-        "transaction.transactionStatus": verifiedPayment[0].transaction_status,
-        "transaction.method": verifiedPayment[0].method,
-        "transaction.date_time": verifiedPayment[0].date_time,
+        'transaction.bank_status': verifiedPayment[0].bank_status,
+        'transaction.sp_code': verifiedPayment[0].sp_code,
+        'transaction.sp_message': verifiedPayment[0].sp_message,
+        'transaction.transactionStatus': verifiedPayment[0].transaction_status,
+        'transaction.method': verifiedPayment[0].method,
+        'transaction.date_time': verifiedPayment[0].date_time,
         status:
-          verifiedPayment[0].bank_status == "Success"
-            ? "Paid"
-            : verifiedPayment[0].bank_status == "Failed"
-            ? "Pending"
-            : verifiedPayment[0].bank_status == "Cancel"
-            ? "Cancelled"
-            : "",
-      }
+          verifiedPayment[0].bank_status == 'Success'
+            ? 'Paid'
+            : verifiedPayment[0].bank_status == 'Failed'
+              ? 'Pending'
+              : verifiedPayment[0].bank_status == 'Cancel'
+                ? 'Cancelled'
+                : '',
+      },
     );
   }
 

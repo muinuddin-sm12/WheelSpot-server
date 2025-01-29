@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OrderService } from './order.service';
 import { Request, Response } from 'express';
-import { OrderModel } from './order.model';
 import catchAsync from '../../utils/catchAsync';
+import { orderService } from './order.service';
+import { User } from '../user/user.model';
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user;
-  const order = await OrderService.createOrderIntoDB(user, req.body, req.ip!);
+  const user = await User.findById(req?.body?.user);
+  const products = req.body.products;
+  // console.log(user)
+  const order = await orderService.createOrder(user, {products}, req.ip!);
   res.status(200).json({
     message: 'Order placed successfully',
     status: true,
@@ -31,7 +33,7 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
 //   });
 // });
 const getOrders = catchAsync(async (req, res) => {
-  const order = await OrderService.();
+  const order = await orderService.getOrders();
 
   res.status(200).json({
     message: "Order retrieved successfully",
@@ -41,7 +43,7 @@ const getOrders = catchAsync(async (req, res) => {
 });
 
 const verifyPayment = catchAsync(async (req, res) => {
-  const order = await OrderService.(req.query.order_id as string);
+  const order = await orderService.verifyPayment(req.query.order_id as string);
 
   res.status(200).json({
     message: "Order verified successfully",
