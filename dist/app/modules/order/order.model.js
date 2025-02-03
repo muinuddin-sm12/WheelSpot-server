@@ -13,21 +13,52 @@ exports.OrderModel = void 0;
 const mongoose_1 = require("mongoose");
 const car_model_1 = require("../car/car.model");
 const orderSchema = new mongoose_1.Schema({
-    user: { type: mongoose_1.Schema.Types.ObjectId, required: true },
-    carDetails: { type: mongoose_1.Schema.Types.ObjectId, required: true },
-    quantity: { type: String, required: true },
-    totalPrice: { type: String, required: true },
-    status: { type: Boolean, default: false }
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    products: [
+        {
+            product: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: "Car",
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+            },
+        },
+    ],
+    totalPrice: {
+        type: Number,
+        required: true,
+    },
+    status: {
+        type: String,
+        enum: ["Pending", "Paid", "Shipped", "Completed", "Cancelled"],
+        default: "Pending",
+    },
+    transaction: {
+        id: String,
+        transactionStatus: String,
+        bank_status: String,
+        sp_code: String,
+        sp_message: String,
+        method: String,
+        date_time: String,
+    },
 }, {
     timestamps: true,
 });
 orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const car = yield car_model_1.CarModel.findById(this.car);
+        const car = yield car_model_1.CarModel.findById(this.products[0].product);
         if (car) {
             car.quantity -= this.quantity;
             // Adjust stock status
-            if (car.quantity === 0) {
+            if (car.quantity === 0 || car.quantity < 0) {
                 car.inStock = false;
             }
             else {

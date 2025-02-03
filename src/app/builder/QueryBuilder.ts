@@ -10,16 +10,17 @@ class QueryBuilder<T> {
   }
 
   search(searchableFields: string[]) {
-    const search = this?.query?.search;
-    if (search) {
-      this.modelQuery = this.modelQuery.find({
-        $or: searchableFields.map(
-          (field) =>
-            ({
-              [field]: { $regex: search, $options: 'i' },
-            }) as FilterQuery<T>,
-        ),
-      });
+    const searchTerm = this.query.search as string;
+    if (searchTerm) {
+      const searchTerms = searchTerm.split(' ');
+      const searchQuery = {
+        $and: searchTerms.map((term) => ({
+          $or: searchableFields.map((field) => ({
+            [field]: { $regex: term, $options: 'i' },
+          })),
+        })),
+      };
+      this.modelQuery = this.modelQuery.find(searchQuery);
     }
     return this;
   }
@@ -27,7 +28,7 @@ class QueryBuilder<T> {
   filter() {
     const queryObj = { ...this.query };
     // console.log('before delete',queryObj);
-    const excludeFields = ['search', 'sortBy', 'sortOrder'];
+    const excludeFields = ['search'];
     excludeFields.forEach((el) => delete queryObj[el]);
     // console.log('after delete', queryObj)
     if (queryObj.filter) {
@@ -37,13 +38,5 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
     return this;
   }
-
-//   sortBy() {
-//     const sortBy = (this?.query?.sortBy as string) || 'createdAt';
-//     const sortOrder = this?.query?.sortOrder === 'asc' ? '' : '-';
-//     const sort = `${sortOrder}${sortBy}`;
-//     this.modelQuery = this.modelQuery.sort(sort);
-//     return this;
-//   }
 }
 export default QueryBuilder;

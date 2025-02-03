@@ -8,15 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarService = void 0;
+const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const car_constant_1 = require("./car.constant");
 const car_model_1 = require("./car.model");
 const createCarIntoDB = (car) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield car_model_1.CarModel.create(car);
     return result;
 });
-const getAllCarsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield car_model_1.CarModel.find();
+const getAllCarsFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const carsQuery = new QueryBuilder_1.default(car_model_1.CarModel.find(), query)
+        .search(car_constant_1.carSearchableFields)
+        .filter();
+    const result = yield carsQuery.modelQuery;
     return result;
 });
 const getACarFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {

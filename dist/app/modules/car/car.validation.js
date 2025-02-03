@@ -9,6 +9,6 @@ exports.carValidationSchema = zod_1.z.object({
     price: zod_1.z.number().positive(),
     category: zod_1.z.enum(['Sedan', 'SUV', 'Truck', 'Coupe', 'Convertible']),
     description: zod_1.z.string(),
-    quantity: zod_1.z.number().positive().min(1),
-    inStock: zod_1.z.boolean(),
+    quantity: zod_1.z.number().positive(),
+    image: zod_1.z.string()
 });

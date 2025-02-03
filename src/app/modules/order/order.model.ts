@@ -6,14 +6,14 @@ const orderSchema = new Schema<IOrder>(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "User",
       required: true,
     },
     products: [
       {
         product: {
           type: Schema.Types.ObjectId,
-          ref: "Product",
+          ref: "Car",
           required: true,
         },
         quantity: {
@@ -46,7 +46,7 @@ const orderSchema = new Schema<IOrder>(
   }
 );
 orderSchema.pre('save', async function (next) {
-  const car = await CarModel.findById(this.carDetails);
+  const car = await CarModel.findById(this.products[0].product);
   if (car) {
     car.quantity -= this.quantity;
 

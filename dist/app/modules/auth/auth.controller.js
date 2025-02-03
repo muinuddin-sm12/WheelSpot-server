@@ -34,7 +34,22 @@ const login = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, 
         data: result,
     });
 }));
+const changePassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.body.userId;
+    const passwordData = {
+        oldPassword: req.body.oldPassword,
+        newPassword: req.body.newPassword,
+    };
+    const result = yield auth_service_1.AuthServices.changePassword(userId, passwordData);
+    res.status(http_status_1.default.OK).json({
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Password is updated succesfully!',
+        data: result,
+    });
+}));
 exports.AuthController = {
     register,
-    login
+    login,
+    changePassword,
 };

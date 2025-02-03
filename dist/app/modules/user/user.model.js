@@ -19,8 +19,16 @@ const config_1 = __importDefault(require("../../config"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const userSchema = new mongoose_1.Schema({
     name: { type: String, required: [true, 'User name is required'] },
-    email: { type: String, required: [true, 'Email is required'], unique: true },
-    password: { type: String, required: [true, 'Password is requried'], select: false },
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is requried'],
+        select: false,
+    },
     role: {
         type: String,
         enum: {
@@ -42,4 +50,14 @@ userSchema.post('save', function (doc, next) {
     doc.password = '';
     next();
 });
+userSchema.statics.isUserExistsByCustomId = function (id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield exports.User.findById({ id }).select('+password');
+    });
+};
+userSchema.statics.isPasswordMatched = function (plainTextPassword, hashedPassword) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(plainTextPassword, hashedPassword);
+    });
+};
 exports.User = (0, mongoose_1.model)('User', userSchema);

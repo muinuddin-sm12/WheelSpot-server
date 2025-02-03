@@ -13,39 +13,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderController = void 0;
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const order_service_1 = require("./order.service");
-const order_validation_1 = require("./order.validation");
-const order_model_1 = require("./order.model");
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
+const order_service_1 = require("./order.service");
+const user_model_1 = require("../user/user.model");
 const createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const orderData = req.body;
-    const zodParsedData = order_validation_1.orderValidationSchema.parse(orderData);
-    const result = yield order_service_1.OrderService.createOrderIntoDB(zodParsedData);
+    var _a;
+    const user = yield user_model_1.User.findById((_a = req === null || req === void 0 ? void 0 : req.body) === null || _a === void 0 ? void 0 : _a.user);
+    const products = req.body.products;
+    const order = yield order_service_1.orderService.createOrder(user, { products }, req.ip);
     res.status(200).json({
-        message: 'Order created successfully',
+        message: 'Order placed successfully',
         status: true,
-        data: result,
+        data: order,
     });
 }));
-const getRevenue = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const revenue = yield order_model_1.OrderModel.aggregate([
-        {
-            $group: {
-                _id: null,
-                totalRevenue: { $sum: '$totalPrice' },
-            },
-        },
-    ]);
+// const getRevenue = catchAsync(async (req: Request, res: Response) => {
+//   const revenue = await OrderModel.aggregate([
+//     {
+//       $group: {
+//         _id: null,
+//         totalRevenue: { $sum: '$totalPrice' },
+//       },
+//     },
+//   ]);
+//   res.status(200).json({
+//     message: 'Revenue calculated successfully',
+//     status: true,
+//     data: {
+//       totalRevenue: revenue[0].totalRevenue,
+//     },
+//   });
+// });
+const getOrders = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const order = yield order_service_1.orderService.getOrders();
     res.status(200).json({
-        message: 'Revenue calculated successfully',
+        message: "Order retrieved successfully",
         status: true,
-        data: {
-            totalRevenue: revenue[0].totalRevenue,
-        },
+        data: order,
+    });
+}));
+const verifyPayment = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const order = yield order_service_1.orderService.verifyPayment(req.query.order_id);
+    res.status(200).json({
+        message: "Order verified successfully",
+        data: order,
     });
 }));
 exports.OrderController = {
     createOrder,
-    getRevenue,
+    // getRevenue,
+    getOrders,
+    verifyPayment
 };

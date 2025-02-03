@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CarModel } from '../car/car.model';
-import { TUser } from '../user/user.interface';
 import { OrderModel } from './order.model';
 import { orderUtils } from './order.utils';
 
 const createOrder = async (
-  user: TUser,
+  user: any,
   payload: { products: { product: string; quantity: number }[] },
   client_ip: string,
 ) => {
@@ -12,7 +12,7 @@ const createOrder = async (
   if (!payload?.products?.length) {
     throw new Error('Order is not specified');
   }
-  const products = payload.products;
+  const products = payload?.products;
 
   let totalPrice = 0;
   const productDetails = await Promise.all(
@@ -67,7 +67,7 @@ const getOrders = async () => {
 const verifyPayment = async (order_id: string) => {
   const verifiedPayment = await orderUtils.verifyPaymentAsync(order_id);
 
-  console.log(order_id)
+  // console.log(order_id)
   if (verifiedPayment.length) {
     await OrderModel.findOneAndUpdate(
       {

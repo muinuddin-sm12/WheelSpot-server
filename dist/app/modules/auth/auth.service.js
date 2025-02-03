@@ -46,7 +46,33 @@ const login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         accessToken: token,
     };
 });
+const changePassword = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    // console.log('user data from auth', userId, payload)
+    // checking if the user is exist
+    const user = yield user_model_1.User.findById(userId).select('password');
+    // console.log(user)
+    if (!user) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !');
+    }
+    // checking if the user is already deleted
+    const isDeactivated = user === null || user === void 0 ? void 0 : user.deactivate;
+    if (isDeactivated) {
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This user is deactivated !');
+    }
+    //checking if the password is correct
+    if (!(yield user_model_1.User.isPasswordMatched(payload.oldPassword, user === null || user === void 0 ? void 0 : user.password)))
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'Password do not matched');
+    //hash new password
+    const newHashedPassword = yield bcrypt_1.default.hash(payload.newPassword, Number(config_1.default.bcrypt_salt_rounds));
+    yield user_model_1.User.findOneAndUpdate({
+        _id: userId,
+    }, {
+        password: newHashedPassword,
+    });
+    return null;
+});
 exports.AuthServices = {
     register,
     login,
+    changePassword,
 };

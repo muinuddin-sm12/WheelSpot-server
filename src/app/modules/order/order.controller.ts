@@ -7,7 +7,6 @@ import { User } from '../user/user.model';
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const user = await User.findById(req?.body?.user);
   const products = req.body.products;
-  // console.log(user)
   const order = await orderService.createOrder(user, {products}, req.ip!);
   res.status(200).json({
     message: 'Order placed successfully',

@@ -27,7 +27,7 @@ const createCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     });
 }));
 const getAllCars = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield car_service_1.CarService.getAllCarsFromDB();
+    const result = yield car_service_1.CarService.getAllCarsFromDB(req.query);
     res.status(200).json({
         message: 'Cars retrieved successfully',
         status: true,
