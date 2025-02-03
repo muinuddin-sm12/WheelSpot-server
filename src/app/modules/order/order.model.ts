@@ -46,9 +46,11 @@ const orderSchema = new Schema<IOrder>(
   }
 );
 orderSchema.pre('save', async function (next) {
+  console.log(this.products[0].product)
   const car = await CarModel.findById(this.products[0].product);
+  console.log(car)
   if (car) {
-    car.quantity -= this.quantity;
+    car.quantity -= this.products[0].quantity;
 
     // Adjust stock status
     if (car.quantity === 0 || car.quantity <0) {
