@@ -4,5 +4,5 @@ export type TReview = {
     review: string;
     image: string;
     customerName: string;
-    data: string;
+    date?: string;
 }
