@@ -4,6 +4,7 @@ import { TReview } from "./review.interface";
 const reviewShcema = new Schema<TReview>({
     carName: {type:String, required:[true, 'Car name is required']},
     review: {type: String, required: [true, 'Review is requied']},
+    rating: {type: Number, required: [true, 'Rating is requried']},
     image: {type: String, required: [true, 'Image is required']},
     customerName : {type:String, required: [true, 'Customer name is required']},
     date: {type:String},
