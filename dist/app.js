@@ -8,7 +8,7 @@ const express_1 = __importDefault(require("express"));
 const router_1 = __importDefault(require("./app/router"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ origin: ['http://localhost:5173', 'http://localhost:5175'], credentials: true }));
+app.use((0, cors_1.default)({ origin: ['https://l2-assignment-4-backend-kappa.vercel.app', 'http://localhost:5173', 'http://localhost:5175'], credentials: true }));
 // application routes
 app.use('/api/v1', router_1.default);
 app.get('/', (req, res) => {

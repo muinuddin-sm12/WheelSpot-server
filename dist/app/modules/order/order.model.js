@@ -54,9 +54,11 @@ const orderSchema = new mongoose_1.Schema({
 });
 orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(this.products[0].product);
         const car = yield car_model_1.CarModel.findById(this.products[0].product);
+        console.log(car);
         if (car) {
-            car.quantity -= this.quantity;
+            car.quantity -= this.products[0].quantity;
             // Adjust stock status
             if (car.quantity === 0 || car.quantity < 0) {
                 car.inStock = false;
