@@ -25,7 +25,7 @@ Follow the steps below to set up and run this project locally:
 
 ### **1. Clone the Repository**
 ```bash
-git clone https://github.com/muinuddin-sm12/L2-Assignment-2.git
+git clone https://github.com/muinuddin-sm12/WheelSpot-server.git
 
 ```
 ### **2. Install Dependencies**
