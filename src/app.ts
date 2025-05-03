@@ -5,7 +5,7 @@ import router from './app/router';
 const app: Application = express();
 
 app.use(express.json());
-app.use(cors({ origin: ['https://l2-assignment-4-backend-kappa.vercel.app','http://localhost:5173', 'https://wheel-spot-client.vercel.app'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:5173', 'https://wheel-spot-client.vercel.app'], credentials: true }));
 
 // application routes
 app.use('/api/v1', router)
