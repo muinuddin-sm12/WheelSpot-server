@@ -32,7 +32,7 @@ class QueryBuilder<T> {
     excludeFields.forEach((el) => delete queryObj[el]);
     // console.log('after delete', queryObj)
     if (queryObj.filter) {
-      queryObj.author = new mongoose.Types.ObjectId(queryObj.filter as string);
+      queryObj.brand = queryObj.filter;
       delete queryObj.filter;
     }
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
